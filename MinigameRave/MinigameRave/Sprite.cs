@@ -48,14 +48,11 @@ namespace MinigameRave
             set { position = value; }
         }
 
-        public Sprite(Texture2D tex, int x, int y)
+        public Sprite(Texture2D tex, Vector2 position)
         {
             texture = tex;
-            gridX = x;
-            gridY = y;
-
-            center = new Vector2(0,0);
-            
+            this.position = position;
+                     
         }
 
         

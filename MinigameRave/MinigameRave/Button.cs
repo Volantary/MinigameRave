@@ -35,9 +35,9 @@ namespace MinigameRave
 
         public bool active;
 
-        public Button(Texture2D texture, int x, int y, Vector2 Position) : base(texture,x,y)
+        public Button(Texture2D texture, Vector2 Position) : base(texture, Position)
         {
-                this.bounds = new Rectangle((int)position.X, (int)position.Y,
+                this.bounds = new Rectangle((int)Position.X, (int)Position.Y,
                 texture.Width, texture.Height);
                 active = true;
         }

@@ -67,10 +67,6 @@ namespace MinigameRave
             }
         }
 
-        public static void drawTitleScreen(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(Textures.titleScreenBackground, new Vector2(0, 0), Color.White);
-        }
     }
 
 }

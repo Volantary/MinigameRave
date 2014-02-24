@@ -20,6 +20,8 @@ namespace MinigameRave
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Button play, options, exit;
+        Textures textures;
 
         public Game1()
         {
@@ -41,10 +43,12 @@ namespace MinigameRave
         /// </summary>
         protected override void Initialize()
         {
-            
 
             //A constructor of sorts
             ScreenManager.initialise();
+            GameManager.initialise();
+
+            globals.contentManager = this.Content;
 
             base.Initialize();
         }
@@ -58,7 +62,34 @@ namespace MinigameRave
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Textures.loadTextures(this.Content);
+            textures = new Textures();
+            textures.loadTextures("backgrounds", "titleScreen");
+
+           //Menu Buttons (might put these in a class one day, probably not!)
+            play = new Button(Content.Load<Texture2D>("buttons/playButton"), new Vector2(50, 50));
+            play.Clicked += new EventHandler(play_Clicked);
+
+            options = new Button(Content.Load<Texture2D>("buttons/options"), new Vector2(150, 50));
+            options.Clicked += new EventHandler(options_Clicked);
+
+            exit = new Button(Content.Load<Texture2D>("buttons/exitButton"), new Vector2(250, 50));
+            exit.Clicked += new EventHandler(exit_Clicked);
+        }
+
+        //EVENT HANDLERS
+        protected void play_Clicked(Object sender, EventArgs e)
+        {
+            ScreenManager.screen = 3;
+        }
+
+        protected void options_Clicked(Object sender, EventArgs e)
+        {
+            ScreenManager.screen = 2;
+        }
+
+        protected void exit_Clicked(Object sender, EventArgs e)
+        {
+            ScreenManager.screen = 9;
         }
 
         /// <summary>
@@ -84,6 +115,9 @@ namespace MinigameRave
             if (ScreenManager.screen == 0)
             {
                 //Title Screen
+                play.Update(gameTime);
+                options.Update(gameTime);
+                exit.Update(gameTime);
             }
 
             if (ScreenManager.screen == 1)
@@ -98,12 +132,13 @@ namespace MinigameRave
 
             if (ScreenManager.screen == 3)
             {
-                //Game
+                GameManager.Update(gameTime);
             }
 
             if (ScreenManager.screen == 9)
             {
                 //Game Over
+                this.Exit();
             }
 
 
@@ -124,7 +159,10 @@ namespace MinigameRave
 
             if (ScreenManager.screen == 0)
             {
-                ScreenManager.drawTitleScreen(spriteBatch);
+                spriteBatch.Draw(textures.getTexture(0), new Vector2(0, 0), Color.White);
+                play.Draw(spriteBatch);
+                options.Draw(spriteBatch);
+                exit.Draw(spriteBatch);
             }
 
             if (ScreenManager.screen == 1)
@@ -139,7 +177,7 @@ namespace MinigameRave
 
             if (ScreenManager.screen == 3)
             {
-                //Game
+                GameManager.Draw(spriteBatch);
             }
 
             if (ScreenManager.screen == 9)

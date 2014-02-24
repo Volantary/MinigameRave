@@ -13,49 +13,61 @@ using Microsoft.Xna.Framework.Media;
 //   GAME MANAGER
 //   In the same way that screenManager handles the screens of the game, this class will handle the games themselves
 
+////////////////////////////////////////////// GAME LIST /////////////////////////////////////
+// 0 - Demo Game
+// 1 - Demo Game
+// 2 - Demo Game
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 namespace MinigameRave
 {
-    public static class gameManager
+    public static class GameManager
     {
-        public static int currentGame; //This will hold the active game or be 0 when no games are active
+        static int currentGame; //This will hold the active game or be 0 when no games are active
         public static bool gameOver; //Will always be False unless the end of the current game has been reached
-        static List<List<Button>> buttons; // Holds all the buttons for the various games. 
-        static int numberOfGames; //Used to initialise the button list - 1 list per game
+        static List<MiniGame> miniGameList;
 
-        public static void initialise()
+        public static void initialise(params MiniGame[] mgl)
         {
             currentGame = 0; // No game active
             gameOver = false;
-            numberOfGames = 30; //30 minigames to start with, can change this number as and when
 
-            buttons = new List<List<Button>>();
-            int i = 0;
-            while (i <= numberOfGames) //Create button lists for 30 games, 
+            miniGameList = new List<MiniGame>();
+            foreach (MiniGame m in mgl)
             {
-                buttons.Add(new List<Button>());
-                i++;
+                miniGameList.Add(m);
             }
 
         }
 
-        //An interface to load buttons into the game (providing there is a list there already)
-        public static void buttonLoader(int game, List<Button> buttonsToLoad)
+        public static void Draw(SpriteBatch spriteBatch)
         {
-            buttons[game] = buttonsToLoad;
+            miniGameList[currentGame].draw(spriteBatch);
         }
 
-        //An interface to load buttons into the game (using a load of buttons)
-        public static void buttonLoader(int game, params Button[] buttonsList)
+        public static void Update(GameTime gameTime)
         {
-            List<Button> buttonsToLoad;
-            buttonsToLoad = new List<Button>();
-
-            for (int i = 0; i == buttonsList.Length; i++)
+            if (checkForGameOver() == 0)
             {
-                buttonsToLoad.Add(buttonsList[i]);
+                miniGameList[currentGame].update(gameTime);
+            }
+            else
+            {
+                currentGame = 0;
             }
 
-            buttons[game] = buttonsToLoad;
+        }
+
+        static int checkForGameOver()
+        {
+            if (miniGameList[currentGame].gameOver == true)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

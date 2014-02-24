@@ -12,13 +12,38 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MinigameRave
 {
-    static class Textures
+    class Textures
     {
-        public static Texture2D titleScreenBackground;
+        private List<Texture2D> textureList;
 
-        public static void loadTextures(ContentManager content)
+
+        public int loadTextures(String gameName, params String[] textureName)
         {
-            titleScreenBackground = content.Load<Texture2D>("backgrounds/titleScreen");
+            String fileName;
+            Texture2D texture;
+            textureList = new List<Texture2D>();
+
+            foreach (String s in textureName)
+            {
+                /*try
+                {*/
+                    fileName = "textures/" + gameName + "/" + s;
+                    texture = globals.contentManager.Load<Texture2D>(fileName);
+                    textureList.Add(texture);
+               /* }
+                catch
+                {
+                    return 1;
+                }*/
+
+            }
+
+            return 0;
+        }
+
+        public Texture2D getTexture(int textureNumber)
+        {
+            return textureList[textureNumber];
         }
     }
 
