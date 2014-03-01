@@ -18,7 +18,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MinigameRave
 {
-    class SoundManager
+    public class SoundManager
     {
         //Variables
         //List of Sounds
@@ -54,20 +54,22 @@ namespace MinigameRave
         {   
             String fileName;
             sounds = new List<SoundEffectInstance>();
-
-            foreach (String s in soundName)
+            if (soundName[0] != "")
             {
-                try
+                foreach (String s in soundName)
                 {
-                    fileName = "sounds/" + gameName + soundName;
-                    soundEffect = globals.contentManager.Load<SoundEffect>(fileName);
-                    sounds.Add(soundEffect.CreateInstance());
-                }
-                catch
-                {
-                    return 1;
-                }
+                    try
+                    {
+                        fileName = "sound/" + gameName + soundName;
+                        soundEffect = globals.contentManager.Load<SoundEffect>(fileName);
+                        sounds.Add(soundEffect.CreateInstance());
+                    }
+                    catch
+                    {
+                        return 1;
+                    }
 
+                }
             }
 
             return 0;

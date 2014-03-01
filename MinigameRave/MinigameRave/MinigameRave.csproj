@@ -72,6 +72,7 @@
     <Compile Include="miniGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenManager.cs" />
+    <Compile Include="games\simpleAdditionMiniGame.cs" />
     <Compile Include="soundManager.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Textures.cs" />

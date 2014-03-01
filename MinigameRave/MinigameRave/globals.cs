@@ -15,6 +15,10 @@ namespace MinigameRave
     public static class globals
     {
         public static ContentManager contentManager;
+        public static SoundEffectInstance titleScreenMusic;
+        public static SoundEffect soundEffect;
+        public static SpriteFont globalFont;
+        public static bool debugMode;
    
     }
 

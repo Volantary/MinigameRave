@@ -44,53 +44,50 @@ namespace MinigameRave
     {
 
         //Managers - leave these alone!
-        SoundManager sm;
-        Textures textures;
+        protected SoundManager sm;
+        protected Textures textures;
 
         //Important variables - leave these alone!
         public bool gameOver;
+        public bool success;
+        protected string miniGameName; //set this in the constructor
+        protected String textureCSV; //set this to contain the name of all textures
+        protected String soundCSV; //set this to contain the name of all sounds
 
         //Buttons - rename these how you wish
         Button button1;
         Button button2;
+        Sprite sprite1;
+        Sprite sprite2;
 
         //We initialise stuff here
         public MiniGame()
         {
-
-            textures = new Textures();
-            //Pass in a comma separated list of texture names. You only need the asset name.
-            textures.loadTextures(/*GAME NAME HERE*/"minigame",
-                "texture1",
-                "texture2");
-
-
-
-            sm = new SoundManager();
-            //Pass in a comma separated list of sound names. You only need the asset name.           
-            sm.loadSound(/*GAME NAME HERE*/"minigame", 
-                "sound1",
-                "sound2");
-
-
-
-            //Initialise a load of buttons here
-            button1 = new Button(textures.getTexture(0), new Vector2(0, 0));
-            button1.Clicked += new EventHandler(button1_Clicked);
-
-            button2 = new Button(textures.getTexture(0), new Vector2(0, 0));
-            button2.Clicked += new EventHandler(button2_Clicked);
-          
-
+            
+            
 
         }
 
-        public void update(GameTime gameTime)
+        protected void initialiseStuff()
+        {
+            textures = new Textures();
+            //Pass in a comma separated list of texture names. You only need the asset name.
+            textures.loadTextures(miniGameName, textureCSV.Split(','));
+
+            sm = new SoundManager();
+            //Pass in a comma separated list of sound names. You only need the asset name.           
+            sm.loadSound(miniGameName, soundCSV.Split(','));
+
+            gameOver = false;
+        }
+    
+
+        public virtual void update(GameTime gameTime)
         {
             //UPDATE LOGIC GOES HERE
         }
 
-        public void draw(SpriteBatch spriteBatch)
+        public virtual void draw(SpriteBatch spriteBatch)
         {
             //DRAW LOGIC GOES HERE
         }

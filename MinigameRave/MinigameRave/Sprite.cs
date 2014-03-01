@@ -16,8 +16,6 @@ namespace MinigameRave
         protected Texture2D texture;
 
         public Vector2 position;
-        protected int gridX;
-        protected int gridY;
 
         protected Vector2 center;
         protected Vector2 origin;
@@ -28,18 +26,6 @@ namespace MinigameRave
         public Vector2 Center
         {
             get { return center; }
-        }
-
-
-        public int GridX
-        {
-            get { return gridX; }
-        }
-
-
-        public int GridY
-        {
-            get { return gridY; }
         }
 
         public Vector2 Position
@@ -80,38 +66,26 @@ namespace MinigameRave
             spriteBatch.Draw(texture, position, color);
         }
 
-        public void setPosition(float x, float y)
-        {
-            gridX = (int)x;
-            gridY = (int)y;
-        }
-
-        public void setPosition(int x, int y)
-        {
-            gridX = x;
-            gridY = y;
-        }
-
 
         //Move the sprite around
-        public void moveRight()
+        public void moveRight(int amount)
         {
-            gridX++;
+            position.X += amount;
         }
 
-        public void moveLeft()
+        public void moveLeft(int amount)
         {
-            gridX--;
+            position.X -= amount;
         }
 
-        public void moveUp()
+        public void moveUp(int amount)
         {
-            gridY--;
+            position.Y += amount;
         }
 
-        public void moveDown()
+        public void moveDown(int amount)
         {
-            gridY++;
+            position.Y -= amount;
         }
 
 

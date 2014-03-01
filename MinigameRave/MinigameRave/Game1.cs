@@ -43,14 +43,17 @@ namespace MinigameRave
         /// </summary>
         protected override void Initialize()
         {
+            globals.contentManager = this.Content;
+
+            //Are we in debug mode?
+            globals.debugMode = true;
+
+            base.Initialize();
 
             //A constructor of sorts
             ScreenManager.initialise();
-            GameManager.initialise();
-
-            globals.contentManager = this.Content;
-
-            base.Initialize();
+            GameManager.initialise(new simpleAddition());
+            
         }
 
         /// <summary>
@@ -62,8 +65,12 @@ namespace MinigameRave
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            //Load background texture (Texture 0)
             textures = new Textures();
-            textures.loadTextures("backgrounds", "titleScreen");
+            textures.loadTexture("backgrounds", "titleScreen");
+
+            //Load fonts
+            globals.globalFont = Content.Load<SpriteFont>("fonts/globalFont");
 
            //Menu Buttons (might put these in a class one day, probably not!)
             play = new Button(Content.Load<Texture2D>("buttons/playButton"), new Vector2(50, 50));
@@ -74,6 +81,13 @@ namespace MinigameRave
 
             exit = new Button(Content.Load<Texture2D>("buttons/exitButton"), new Vector2(250, 50));
             exit.Clicked += new EventHandler(exit_Clicked);
+
+            //Sounds for titleScreen etc
+            globals.soundEffect = Content.Load<SoundEffect>("sound/titleScreenMusic");
+            globals.titleScreenMusic = globals.soundEffect.CreateInstance();
+            globals.titleScreenMusic.IsLooped = true;
+            globals.titleScreenMusic.Play();
+            
         }
 
         //EVENT HANDLERS
