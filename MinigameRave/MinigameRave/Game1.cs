@@ -45,6 +45,9 @@ namespace MinigameRave
         {
             globals.contentManager = this.Content;
 
+            graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
+
             //Are we in debug mode?
             globals.debugMode = true;
 
@@ -64,6 +67,9 @@ namespace MinigameRave
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //Set game time - Will be done through difficulty modes at some time
+            globals.setGameLife(4);
 
             //Load background texture (Texture 0)
             textures = new Textures();

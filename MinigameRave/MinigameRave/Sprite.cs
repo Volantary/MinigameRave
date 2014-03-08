@@ -66,6 +66,16 @@ namespace MinigameRave
             spriteBatch.Draw(texture, position, color);
         }
 
+        public virtual void Draw(SpriteBatch spriteBatch, float setRotation, Color color)
+        {
+            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height), null, Color.White, setRotation, origin, SpriteEffects.None, 0f);
+        }
+
+        public virtual void setOrigin(Vector2 origin)
+        {
+            this.origin = origin;
+        }
+
 
         //Move the sprite around
         public void moveRight(int amount)

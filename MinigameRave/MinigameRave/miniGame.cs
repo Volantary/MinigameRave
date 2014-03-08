@@ -46,6 +46,7 @@ namespace MinigameRave
         //Managers - leave these alone!
         protected SoundManager sm;
         protected Textures textures;
+        private Textures secretTextures;
 
         //Important variables - leave these alone!
         public bool gameOver;
@@ -53,12 +54,14 @@ namespace MinigameRave
         protected string miniGameName; //set this in the constructor
         protected String textureCSV; //set this to contain the name of all textures
         protected String soundCSV; //set this to contain the name of all sounds
+        private int gameLife;
+        private float timeLeft;
+        private double percentage;
+        private TimeSpan elapsedTime;
 
         //Buttons - rename these how you wish
-        Button button1;
-        Button button2;
-        Sprite sprite1;
-        Sprite sprite2;
+        private Sprite stopWatch;
+        private Sprite stopWatchHand;
 
         //We initialise stuff here
         public MiniGame()
@@ -78,18 +81,47 @@ namespace MinigameRave
             //Pass in a comma separated list of sound names. You only need the asset name.           
             sm.loadSound(miniGameName, soundCSV.Split(','));
 
+            secretTextures = new Textures();
+            secretTextures.loadTexture("general", "stopWatch");
+            secretTextures.loadTexture("general", "stopWatchHand");
+
+            stopWatch = new Sprite(secretTextures.getTexture(0),new Vector2(0,0));
+            stopWatchHand = new Sprite(secretTextures.getTexture(1),new Vector2(59 + secretTextures.getTexture(1).Width/2, 35+ secretTextures.getTexture(1).Height));
+
+            stopWatchHand.setOrigin(new Vector2(secretTextures.getTexture(1).Width/2, secretTextures.getTexture(1).Height));
+
             gameOver = false;
+            gameLife = globals.getGameLife();
         }
     
 
         public virtual void update(GameTime gameTime)
         {
             //UPDATE LOGIC GOES HERE
+            elapsedTime += gameTime.ElapsedGameTime;
+
+            //Check for expired time
+            if (elapsedTime.TotalSeconds >= globals.getGameLife())
+            {
+                gameOver = true;
+                success = false;
+            }
+
+            timeLeft = globals.getGameLife() - elapsedTime.Milliseconds;
+            percentage = elapsedTime.TotalSeconds/ globals.getGameLife();
+
         }
 
         public virtual void draw(SpriteBatch spriteBatch)
         {
             //DRAW LOGIC GOES HERE
+            if (globals.debugMode == true)
+            {
+                spriteBatch.DrawString(globals.globalFont, elapsedTime.TotalSeconds.ToString(), new Vector2(350, 0), Color.Red);
+            }
+
+            stopWatch.Draw(spriteBatch, Color.White);
+            stopWatchHand.Draw(spriteBatch,(float)percentage*MathHelper.Pi*2,Color.White);
         }
 
         // /\/\/\/\/\/\/\/\/\/\/\/\ EVENT HANDLERS /\/\/\/\/\/\/\/\/\/\/\

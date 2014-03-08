@@ -19,6 +19,17 @@ namespace MinigameRave
         public static SoundEffect soundEffect;
         public static SpriteFont globalFont;
         public static bool debugMode;
+        static int gameLife;
+  
+        public static void setGameLife(int number)
+        {
+            gameLife = number;
+        }
+
+        public static int getGameLife()
+        {
+            return gameLife;
+        }
    
     }
 
